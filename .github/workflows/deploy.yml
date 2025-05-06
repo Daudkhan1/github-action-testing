@@ -36,7 +36,7 @@ jobs:
           --build-arg BUILDKIT_INLINE_CACHE=1 \
           --cache-from=type=local,src=/tmp/.buildx-cache \
           --cache-to=type=local,dest=/tmp/.buildx-cache \
-          -t $IMAGE_NAME:$IMAGE_TAG \
+          -t ${{ secrets.DOCKERHUB_USERNAME }}/ $IMAGE_NAME:$IMAGE_TAG \
           --push .  # --push flag should be on the same line as docker buildx build
 
     - name: 🔐 Set up SSH
