@@ -1,24 +1,164 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Full Stack App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create User</title>
+    <style>
+        /* Reset default margin, padding, and box-sizing for better control */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body setup */
+        body {
+            background: linear-gradient(135deg, #00d4ff, #00aaff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+
+        /* Container for the form */
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        /* Title styling */
+        h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* Label styling */
+        label {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        /* Input fields styling */
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 24px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Focus effect on input fields */
+        input[type="text"]:focus,
+        input[type="email"]:focus {
+            border-color: #00aaff;
+            box-shadow: 0 0 8px rgba(0, 170, 255, 0.4);
+        }
+
+        /* Submit button styling */
+        input[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            background-color: #00aaff;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Hover effect for submit button */
+        input[type="submit"]:hover {
+            background-color: #00d4ff;
+            transform: translateY(-2px);
+        }
+
+        /* Footer text styling */
+        .form-footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .form-footer a {
+            color: #00aaff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Fade-in animation for the form */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            input[type="submit"] {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Create User</h1>
-    <form action="/submit" method="POST">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br>
-        
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br>
+    <div class="container">
+        <h1>Create User</h1>
+        <form action="/submit" method="POST" aria-labelledby="form-title">
+            <!-- Username input -->
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required aria-required="true" aria-describedby="username-help">
 
-<!--    <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br>
+            <!-- Email input -->
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required aria-required="true" aria-describedby="email-help">
 
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name"><br>
--->
-        <input type="submit" value="Submit">
-    </form>
+            <!-- Submit button -->
+            <input type="submit" value="Submit">
+
+        </form>
+        <div class="form-footer">
+            <p>Already have an account? <a href="/login" aria-label="Go to login page">Login here</a></p>
+        </div>
+    </div>
 </body>
 </html>
