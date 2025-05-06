@@ -19,8 +19,8 @@ jobs:
     - name: 🧠 Cache Docker layers
       uses: actions/cache@v3
       with:
-        path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-docker-${{ github.sha }}
+        path: /tmp/.buildx-cache   # Docker cache location
+        key: ${{ runner.os }}-docker-${{ github.sha }}  # Unique cache key based on commit hash
         restore-keys: |
           ${{ runner.os }}-docker-
 
@@ -29,7 +29,10 @@ jobs:
 
     - name: 📦 Build and Push Docker image
       run: |
-        docker build \
+        # Enable BuildKit and ensure caching works with BuildKit
+        export DOCKER_CLI_EXPERIMENTAL=enabled
+        docker buildx create --use  # Create a new builder instance
+        docker buildx build \
           --build-arg BUILDKIT_INLINE_CACHE=1 \
           --cache-from=type=local,src=/tmp/.buildx-cache \
           --cache-to=type=local,dest=/tmp/.buildx-cache \
