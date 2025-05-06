@@ -1,0 +1,46 @@
+name: CI/CD to EC2 (Production)
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  IMAGE_NAME: myapp:latest
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Run unit tests
+      run: |
+        echo "🧪 Run your test framework here"
+        # For Python: pytest, unittest, etc.
+        # Example: python -m unittest discover
+
+    - name: Set up SSH agent
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+    - name: Deploy to EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOST }} << 'EOF'
+          echo "🚀 Pulling latest code"
+          cd /home/ec2-user/myapp
+
+          git pull origin main
+
+          echo "🐳 Stopping existing Docker container (if any)"
+          docker stop myapp || true
+          docker rm myapp || true
+
+          echo "📦 Building Docker image"
+          docker build -t myapp .
+
+          echo "🚀 Running new container"
+          docker run -d -p 80:${{ secrets.APP_PORT }} --name myapp --restart=always myapp
+        EOF
